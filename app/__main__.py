@@ -63,5 +63,3 @@ class UserAdmin(ModelView, model=User):
 
 
 admin.add_view(UserAdmin)
-
-uvicorn.run(app)
