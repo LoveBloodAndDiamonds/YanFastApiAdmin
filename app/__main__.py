@@ -1,5 +1,4 @@
 import datetime
-import logging
 
 from fastapi import FastAPI
 from sqladmin import Admin, ModelView
@@ -7,12 +6,7 @@ import uvicorn
 
 from app.db import User, session_maker, engine
 from app.auth import AdminAuth
-from app.config import Config
-
-# Инициализация логгера
-logging.basicConfig(level=logging.DEBUG, filename='app.log', filemode='a',
-                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
+from app.config import Config, logger
 
 app = FastAPI()
 
