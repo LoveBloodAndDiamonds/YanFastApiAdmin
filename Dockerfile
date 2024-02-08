@@ -10,4 +10,4 @@ RUN pip3 install -r requirements.txt
 EXPOSE 80
 
 # Запуск проекта
-CMD ["uvicorn", "src.admin.main:app", "--host", "0.0.0.0", "--port", "80"]
+CMD ["uvicorn", "app.__main__:app", "--host", "0.0.0.0", "--port", "80"]
