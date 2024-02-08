@@ -30,21 +30,29 @@ async def access(username: str):
     response = requests.get(url)
     data = response.json()
     """
-    logger.info(f"New access request with {username=}.")
-    with session_maker() as session:
-        user: User | None = session.query(User).filter(User.username == username).first()
-    logger.info(f"{username=} is {user}")
+    try:
+        logger.info(f"New access request with {username=}.")
+        with session_maker() as session:
+            user: User | None = session.query(User).filter(User.username == username).first()
+        logger.info(f"{username=} is {user}")
 
-    if not user:  # Если юзер не был найден в базе данных
-        logger.info(f"Returning False to {username}")
-        return {"access": False}
-    else:
-        if user.expired_date > datetime.datetime.now().date():  # Если срок истечения подписки больше, чем текущее время
-            logger.info(f"Returning True to {username}")
-            return {"access": True}
-        else:  # Если срок истченеия подписки меньше, чем текущее время
+        # Если юзер не был найден в базе данных
+        if not user:
             logger.info(f"Returning False to {username}")
             return {"access": False}
+
+        else:
+            # Если срок истечения подписки больше, чем текущее время
+            if user.expired_date > datetime.datetime.now().date():
+                logger.info(f"Returning True to {username}")
+                return {"access": True}
+            # Если срок истченеия подписки меньше, чем текущее время
+            else:
+                logger.info(f"Returning False to {username}")
+                return {"access": False}
+
+    except Exception as e:
+        logger.exception(e)
 
 
 class UserAdmin(ModelView, model=User):
