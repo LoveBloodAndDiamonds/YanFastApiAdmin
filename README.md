@@ -68,12 +68,12 @@ def get_access(username: str) -> bool:
        
        return result["access"]
     except Exception as e:
-        print(f"Ошибка при проверке лицензии: {e}")
+        print(f"Ошибка при проверке лицензии: {e}")  # Заменить логированием, если надо
         raise e
 
 
 def your_application():
-    access: bool = get_access("username")
+    access: bool = get_access("username")  # Обязательно обрабатывать ошибки
 
     if access:
         print("Вход в программу разрешен.") 
